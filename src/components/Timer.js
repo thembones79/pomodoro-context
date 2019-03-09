@@ -1,4 +1,5 @@
 import React from "react";
+import PomodoroContext from "./PomodoroContext";
 
 const Timer = ({ timeLeft }) => {
   function addZero(number) {
@@ -9,10 +10,22 @@ const Timer = ({ timeLeft }) => {
     }
   }
 
-  let minutes = addZero(Math.floor(timeLeft / 60));
-  let seconds = addZero(timeLeft % 60);
+  function minutes(number) {
+    return addZero(Math.floor(number / 60));
+  }
+  function seconds(number) {
+    return addZero(number % 60);
+  }
 
-  return <div id="time-left">{minutes + ":" + seconds}</div>;
+  return (
+    <PomodoroContext.Consumer>
+      {pomodoro => (
+        <div id="time-left">
+          {minutes(pomodoro.secondsLeft) + ":" + seconds(pomodoro.secondsLeft)}
+        </div>
+      )}
+    </PomodoroContext.Consumer>
+  );
 };
 
 export default Timer;

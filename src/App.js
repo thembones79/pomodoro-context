@@ -1,18 +1,23 @@
 import React from "react";
 import ClockFace from "./components/ClockFace";
 import Settings from "./components/Settings";
+import PomodoroContext from "./components/PomodoroContext";
+
+const INITIAL_STATE = {
+  pomodoro: {
+    isSession: true,
+    sessionLength: 25,
+    breakLength: 5,
+    secondsLeft: 1500,
+    intervalTime: 1500,
+    isCountingDown: false
+  }
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isSession: true,
-      sessionLength: 25,
-      breakLength: 5,
-      secondsLeft: 1500,
-      intervalTime: 1500,
-      isCountingDown: false
-    };
+    this.state = INITIAL_STATE;
   }
 
   beep = () => {
@@ -21,14 +26,7 @@ class App extends React.Component {
 
   reset = () => {
     clearInterval(this.timer);
-    this.setState({
-      isSession: true,
-      sessionLength: 25,
-      breakLength: 5,
-      secondsLeft: 1500,
-      intervalTime: 1500,
-      isCountingDown: false
-    });
+    this.setState(INITIAL_STATE);
     this.beeper.pause();
     this.beeper.currentTime = 0;
   };
@@ -123,36 +121,41 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id="pomodoro" className={this.state.isSession ? "tomato" : "green"}>
-        <header>
-          <h1>Pomodoro Clock</h1>
-        </header>
-        <ClockFace
-          beep={this.beep}
-          countdown={this.countdown}
-          reset={this.reset}
-          isSession={this.state.isSession}
-          timeLeft={this.state.secondsLeft}
-          totalTime={this.state.intervalTime}
-          isCountingDown={this.state.isCountingDown}
-        />
-        <Settings
-          breakLength={this.state.breakLength}
-          sessionLength={this.state.sessionLength}
-          handleSessionIncrementClick={this.sessionIncrement}
-          handleSessionDecrementClick={this.sessionDecrement}
-          handleBreakIncrementClick={this.breakIncrement}
-          handleBreakDecrementClick={this.breakDecrement}
-        />
-        <audio
-          id="beep"
-          preload="auto"
-          src="https://tomato-news.surge.sh/static/media/BeepSound.988833bf.wav"
-          ref={audio => {
-            this.beeper = audio;
-          }}
-        />
-      </div>
+      <PomodoroContext.Provider value={this.state.pomodoro}>
+        <div
+          id="pomodoro"
+          className={this.state.isSession ? "tomato" : "green"}
+        >
+          <header>
+            <h1>Pomodoro Clock</h1>
+          </header>
+          <ClockFace
+            beep={this.beep}
+            countdown={this.countdown}
+            reset={this.reset}
+            isSession={this.state.isSession}
+            timeLeft={this.state.secondsLeft}
+            totalTime={this.state.intervalTime}
+            isCountingDown={this.state.isCountingDown}
+          />
+          <Settings
+            breakLength={this.state.breakLength}
+            sessionLength={this.state.sessionLength}
+            handleSessionIncrementClick={this.sessionIncrement}
+            handleSessionDecrementClick={this.sessionDecrement}
+            handleBreakIncrementClick={this.breakIncrement}
+            handleBreakDecrementClick={this.breakDecrement}
+          />
+          <audio
+            id="beep"
+            preload="auto"
+            src="https://tomato-news.surge.sh/static/media/BeepSound.988833bf.wav"
+            ref={audio => {
+              this.beeper = audio;
+            }}
+          />
+        </div>
+      </PomodoroContext.Provider>
     );
   }
 }

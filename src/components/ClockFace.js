@@ -15,7 +15,7 @@ const ClockFace = ({
   return (
     <div id="outer-face">
       <div id="clock-face">
-        <Status isSession={isSession} timeLeft={timeLeft} />
+        <Status />
         <Circle timeLeft={timeLeft} totalTime={totalTime} />
       </div>
       <Controls

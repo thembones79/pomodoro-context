@@ -1,7 +1,7 @@
 import React from "react";
 import PomodoroContext from "./PomodoroContext";
 
-const Timer = ({ timeLeft }) => {
+const Timer = () => {
   function addZero(number) {
     if (number < 10) {
       return "0" + number;

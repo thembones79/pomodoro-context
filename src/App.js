@@ -4,14 +4,14 @@ import Settings from "./components/Settings";
 import PomodoroContext from "./components/PomodoroContext";
 
 const INITIAL_STATE = {
-  pomodoro: {
+
     isSession: true,
     sessionLength: 25,
     breakLength: 5,
     secondsLeft: 1500,
     intervalTime: 1500,
     isCountingDown: false
-  }
+
 };
 
 class App extends React.Component {
@@ -121,7 +121,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <PomodoroContext.Provider value={this.state.pomodoro}>
+      <PomodoroContext.Provider value={this.state}>
         <div
           id="pomodoro"
           className={this.state.isSession ? "tomato" : "green"}

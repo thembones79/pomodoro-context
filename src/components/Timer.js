@@ -19,9 +19,9 @@ const Timer = () => {
 
   return (
     <PomodoroContext.Consumer>
-      {pomodoro => (
+      {({secondsLeft}) => (
         <div id="time-left">
-          {minutes(pomodoro.secondsLeft) + ":" + seconds(pomodoro.secondsLeft)}
+          {minutes(secondsLeft) + ":" + seconds(secondsLeft)}
         </div>
       )}
     </PomodoroContext.Consumer>

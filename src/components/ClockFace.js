@@ -16,10 +16,9 @@ const ClockFace = ({
     <div id="outer-face">
       <div id="clock-face">
         <Status />
-        <Circle timeLeft={timeLeft} totalTime={totalTime} />
+        <Circle />
       </div>
-      <Controls
-        beep={beep}
+      <Controls        
         countdown={countdown}
         isCountingDown={isCountingDown}
         reset={reset}

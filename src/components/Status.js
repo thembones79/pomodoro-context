@@ -6,12 +6,12 @@ import PomodoroContext from "./PomodoroContext";
 
 const Status = () => (
   <PomodoroContext.Consumer>
-    {(pomodoro) => (
+    {({isSession}) => (
       <div id="status">
-        <div id="timer-label">{pomodoro.isSession ? "session" : "break"}</div>
+        <div id="timer-label">{isSession ? "session" : "break"}</div>
         <Timer/>
         <div id="status-icon">
-          {pomodoro.isSession ? <SessionIcon /> : <BreakIcon />}
+          {isSession ? <SessionIcon /> : <BreakIcon />}
         </div>
       </div>
     )}
